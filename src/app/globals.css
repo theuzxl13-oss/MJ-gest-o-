@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-h: 76px;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-offwhite font-sans text-graphite antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif text-forest;
+    text-wrap: balance;
+  }
+  ::selection {
+    @apply bg-gold/30 text-forest;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-offwhite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold-dark;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-gold;
+  }
+  .input {
+    @apply block w-full rounded-lg border border-forest/15 bg-white px-4 py-3 text-[15px] text-graphite shadow-sm transition placeholder:text-graphite/40 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:bg-offwhite;
+  }
+  .input-error {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-200;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-forest;
+  }
+  .card {
+    @apply rounded-2xl border border-forest/10 bg-white shadow-card;
+  }
+  .prose-mj p {
+    @apply mb-4 leading-relaxed text-graphite/80;
+  }
+  .leaf-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgba(182, 154, 91, 0.18) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+}
