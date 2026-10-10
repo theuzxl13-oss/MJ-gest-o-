@@ -104,7 +104,8 @@ npm run dev                    # http://localhost:3000
 4. Crie o administrador: **Authentication → Users → Add user** (e-mail e senha) e, no SQL Editor:
    ```sql
    insert into public.admins (user_id)
-   select id from auth.users where email = 'email-do-administrador@dominio.com.br';
+   select id from auth.users where email = 'email-do-administrador@dominio.com.br'
+   on conflict (user_id) do nothing;
    ```
 5. Copie **Project URL** e **anon public key** (Project Settings → API) para `.env.local`:
    ```
