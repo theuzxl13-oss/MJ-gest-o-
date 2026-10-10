@@ -91,16 +91,16 @@ npm run dev                    # http://localhost:3000
 | `npm run build:pages` | Exportação estática demonstrativa (pasta `out/`) |
 | `npm run typecheck` | Verificação de tipos |
 | `npm test` | Testes unitários |
-| `npm run db:seed-sql` | Regenera `supabase/seed.sql` a partir de `src/lib/seed.ts` |
+| `npm run db:seed-sql` | Regenera `supabase/seed.sql` e `supabase/setup-completo.sql` a partir de `src/lib/seed.ts` e das migrações |
 | `node scripts/generate-illustrations.mjs` | Regenera as ilustrações SVG |
 
 ## 4. Configurar o Supabase
 
 1. Crie um projeto em [supabase.com](https://supabase.com).
-2. No **SQL Editor**, execute **em ordem** os arquivos de `supabase/migrations/`:
-   `…_schema.sql`, `…_policies.sql` e `…_storage.sql`.
-   (Ou, com a Supabase CLI: `supabase link` e `supabase db push`.)
-3. *(Opcional)* Execute `supabase/seed.sql` para carregar o conteúdo demonstrativo.
+2. No **SQL Editor**, cole e execute o arquivo único `supabase/setup-completo.sql` (migrações + conteúdo
+   demonstrativo). Alternativas: executar em ordem os arquivos de `supabase/migrations/` e, opcionalmente,
+   `supabase/seed.sql`; ou usar a Supabase CLI (`supabase link` e `supabase db push`).
+3. *(Opcional)* Sem o conteúdo demonstrativo: use apenas os arquivos de `supabase/migrations/`.
 4. Crie o administrador: **Authentication → Users → Add user** (e-mail e senha) e, no SQL Editor:
    ```sql
    insert into public.admins (user_id)

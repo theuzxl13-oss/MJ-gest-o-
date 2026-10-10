@@ -2,7 +2,7 @@
  * Gera supabase/seed.sql a partir de src/lib/seed.ts (fonte única do conteúdo demonstrativo).
  * Uso: npm run db:seed-sql
  */
-import { writeFileSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { seedArticles, seedCategories, seedProjects, seedServices } from '../src/lib/seed';
 
 const q = (v: unknown): string => {
@@ -32,4 +32,22 @@ ${insert('projects', seedProjects as unknown as Record<string, unknown>[])}
 ${insert('articles', seedArticles as unknown as Record<string, unknown>[])}`;
 
 writeFileSync('supabase/seed.sql', sql);
-console.log('supabase/seed.sql gerado.');
+
+// Arquivo único (migrações + dados de demonstração) para colar de uma vez no SQL Editor do Supabase.
+const migrations = readdirSync('supabase/migrations')
+  .filter((f) => f.endsWith('.sql'))
+  .sort()
+  .map((f) => `-- ▼▼▼ ${f} ▼▼▼\n${readFileSync(`supabase/migrations/${f}`, 'utf8')}`);
+writeFileSync(
+  'supabase/setup-completo.sql',
+  `-- ═══════════════════════════════════════════════════════════════
+-- MJ Gestão & Ambiental — INSTALAÇÃO COMPLETA DO BANCO (gerado automaticamente)
+-- Cole TODO este arquivo no Supabase → SQL Editor → New query → Run.
+-- Pode ser executado mais de uma vez com segurança.
+-- ═══════════════════════════════════════════════════════════════
+
+${migrations.join('\n')}
+-- ▼▼▼ seed.sql ▼▼▼
+${sql}`,
+);
+console.log('supabase/seed.sql e supabase/setup-completo.sql gerados.');
