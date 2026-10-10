@@ -2,6 +2,17 @@
 -- Políticas RLS: visitantes leem apenas conteúdo publicado;
 -- somente administradores alteram dados e leem solicitações.
 -- ═══════════════════════════════════════════════════════════════
+-- Permissões explícitas (o acesso real continua limitado pelas políticas RLS abaixo).
+-- Garantem o funcionamento mesmo com "Expor automaticamente novas tabelas" desativado.
+grant usage on schema public to anon, authenticated;
+grant select on public.site_settings, public.service_categories, public.services, public.projects,
+  public.team_members, public.articles to anon, authenticated;
+grant insert, update, delete on public.site_settings, public.service_categories, public.services, public.projects,
+  public.team_members, public.articles to authenticated;
+grant select, update, delete on public.quote_requests to authenticated;
+grant select on public.admins to authenticated;
+revoke insert on public.quote_requests from anon, authenticated;
+
 alter table public.admins enable row level security;
 alter table public.site_settings enable row level security;
 alter table public.service_categories enable row level security;
