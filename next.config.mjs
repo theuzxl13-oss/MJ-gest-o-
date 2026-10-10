@@ -2,8 +2,7 @@
  * Dois alvos de build a partir do mesmo código:
  *  - Padrão (Vercel): rotas de API ativas, Supabase, cabeçalhos de segurança.
  *  - Exportação estática (GitHub Pages): NEXT_PUBLIC_STATIC_EXPORT=true.
- *    Rotas de API (arquivos `route.api.ts`) ficam fora do build porque a
- *    extensão `api.ts` só é registrada no modo servidor.
+ *    As rotas de API são retiradas temporariamente por scripts/build-pages.mjs.
  */
 const isExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -33,7 +32,6 @@ const nextConfig = {
   output: isExport ? 'export' : undefined,
   basePath: basePath || undefined,
   trailingSlash: isExport,
-  pageExtensions: isExport ? ['tsx', 'ts'] : ['tsx', 'ts', 'api.ts'],
   images: {
     unoptimized: isExport,
     remotePatterns: host

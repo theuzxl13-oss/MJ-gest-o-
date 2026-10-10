@@ -35,8 +35,8 @@ com WhatsApp e banco de dados Supabase com políticas RLS.
 **Decisões principais**
 
 - **Um código, dois alvos de build.** `npm run build` gera o site completo (Vercel). `npm run build:pages` gera
-  uma exportação estática (GitHub Pages). As rotas de API usam a extensão `route.api.ts`, registrada apenas no
-  modo servidor — por isso não quebram a exportação estática.
+  uma exportação estática (GitHub Pages). Como a exportação estática não suporta rotas de API,
+  `scripts/build-pages.mjs` retira a pasta `src/app/api` durante esse build e a restaura em seguida.
 - **Repositório de dados com duas implementações.** A interface não sabe se está em demonstração ou produção.
   Sem as variáveis do Supabase (ou com `NEXT_PUBLIC_DEMO_MODE=true`), o site entra em modo demonstrativo.
 - **Segurança no banco, não no navegador.** A anon key do Supabase é pública por design; quem protege os dados são
