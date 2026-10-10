@@ -125,6 +125,9 @@ npm run dev                    # http://localhost:3000
    - Opcional, para aviso por e-mail de novas solicitações ([Resend](https://resend.com)):
      `RESEND_API_KEY`, `NOTIFY_EMAIL_TO`, `NOTIFY_EMAIL_FROM` (remetente de domínio verificado)
 3. Faça o deploy e configure o domínio próprio em **Settings → Domains**.
+4. **Importante:** as variáveis `NEXT_PUBLIC_*` são incorporadas no momento do build. Sempre que criar ou alterar
+   variáveis, faça um novo deploy (**Deployments → ⋯ → Redeploy**, sem o cache de build) ou envie um commit.
+   Para conferir, acesse `/api/status`: com o Supabase ativo, a resposta traz `"supabase":true,"demo":false`.
 
 ## 6. Versão demonstrativa no GitHub Pages
 
